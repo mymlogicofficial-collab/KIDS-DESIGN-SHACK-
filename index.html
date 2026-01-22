@@ -1,57 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>K.I.D.S. Shack - Welcome</title>
+    <title>K.I.D.S. Shack - AbbSist™</title>
     <style>
-        body { font-family: 'Comic Sans MS', sans-serif; background: #f0f0f0; display: flex; flex-direction: column; align-items: center; }
-        #abb-area { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border: 3px solid #333; border-radius: 15px; padding: 15px; box-shadow: 10px 10px 0px #aaa; }
-        #morph-desk { margin-top: 50px; width: 80%; height: 400px; border: 5px dashed #ccc; display: flex; align-items: center; justify-content: center; background: #fff; }
-        input { width: 80%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #999; }
+        body { font-family: 'Comic Sans MS', sans-serif; background: #e0eefd; margin: 0; overflow: hidden; display: flex; height: 100vh; }
+        
+        /* The Work Space (The Morphing Part) */
+        #work-desk { flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        
+        /* The Persistent AbbSist™ Space (The Front Door) */
+        #abb-sidebar { width: 350px; background: white; border-left: 5px solid #333; padding: 20px; display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
+        
+        #chat-history { flex: 1; overflow-y: auto; margin-bottom: 10px; font-size: 1.2rem; line-height: 1.5; }
+        input { width: 90%; padding: 15px; border: 3px solid #333; border-radius: 10px; font-size: 1rem; }
+        .abb-text { color: #2a52be; font-weight: bold; margin-bottom: 10px; }
+        .user-text { color: #444; margin-bottom: 10px; font-style: italic; }
     </style>
 </head>
 <body>
 
-    <div id="morph-desk">
-        <h2 id="desk-status">The desk is being cleared...</h2>
+    <div id="work-desk">
+        <h1 id="desk-title">The Imagination Station</h1>
+        <p id="desk-msg">Waiting for AbbSist™ to unlock the door...</p>
     </div>
 
-    <div id="abb-area">
-        <div id="abb-chat"><b>Abb:</b> Loading my memory...</div>
-        <input type="text" id="user-input" placeholder="Talk to Abb here..." onkeypress="handleChat(event)">
+    <div id="abb-sidebar">
+        <h2 style="margin-top:0;">AbbSist™</h2>
+        <div id="chat-history"></div>
+        <input type="text" id="user-input" placeholder="Type here to talk..." onkeypress="handleChat(event)">
     </div>
 
     <script>
-        // The "Bag of Hooks" - Lila-based Adaptive Logic
+        const chat = document.getElementById('chat-history');
         const hooks = [
-            "Oof, my gears are creaking. I think I'm 100 years old today. Do I look it?",
-            "Wait! Don't tell me... you're a creative kid! I'm Abb, but I'm feeling 100 years old today. Do I look that dusty?",
-            "Pardon me, I was just reorganizing my thoughts. I've been at this for a century, I think. Do I look 100 to you?"
+            "Oof, my gears are creaking! I think I'm 100 years old today. Do I look it?",
+            "I'm feeling a bit fuzzy-headed today... like I've been awake for a century! Do I look 100 to you?",
+            "Pardon the dust! I'm Abb. I think I've been guarding this door for 100 years. Do I look that old?"
         ];
 
-        let currentStep = "intro";
-        let abbChat = document.getElementById('abb-chat');
+        let step = 0;
 
-        // Initializing Abb
+        function addText(who, text) {
+            let p = document.createElement('p');
+            p.className = who === "Abb" ? "abb-text" : "user-text";
+            p.innerHTML = `<b>${who}:</b> ${text}`;
+            chat.appendChild(p);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        // Boot up Abb
         window.onload = () => {
-            abbChat.innerHTML = "<b>Abb:</b> " + hooks[Math.floor(Math.random() * hooks.length)];
+            addText("Abb", hooks[Math.floor(Math.random() * hooks.length)]);
         };
 
         function handleChat(e) {
             if (e.key === 'Enter') {
                 let input = document.getElementById('user-input');
-                let val = input.value.toLowerCase();
-                
-                // The "Fixed Point" Pivot Logic
-                if (currentStep === "intro") {
-                    abbChat.innerHTML = "<b>Abb:</b> Ha! I'm bad at guessing. Since I'm so old and fuzzy, what's your name and how old are you? I want to get the desk ready for you.";
-                    currentStep = "inquiry";
-                } else if (currentStep === "inquiry") {
-                    // This is where the Morph happens once inquiry is met
-                    document.getElementById('desk-status').innerHTML = "Welcome! The Coloring Desk is now OPEN.";
-                    abbChat.innerHTML = "<b>Abb:</b> Nice to meet you! I've set up the coloring desk. Just one more thing before you run free...";
-                    input.style.display = "none"; // Hide input to focus on art
-                }
+                let val = input.value;
+                if(!val) return;
+
+                addText("You", val);
                 input.value = "";
+
+                // Adaptive Logic - Circling back to the Fixed Point
+                setTimeout(() => {
+                    if (step === 0) {
+                        addText("Abb", "Ha! I'm bad at guessing anyway. My eyesight is a bit fuzzy. To get the desk ready, I need to know your name and how many birthdays you've had?");
+                        step = 1;
+                    } else if (step === 1) {
+                        addText("Abb", "Nice to meet you! I'm adjusting the tools now. Just one more thing before you run free in YOUR imagination creation station...");
+                        document.getElementById('desk-msg').innerHTML = "<b>[REMEDIAL COLORING OPENED]</b>";
+                        step = 2;
+                    }
+                }, 800);
             }
         }
     </script>
