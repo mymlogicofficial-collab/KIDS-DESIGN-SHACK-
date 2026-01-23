@@ -1,4 +1,4 @@
-K.I.D.S.-Intellectual Development Software. K.I.D.S. - for CREATIVE kids. A fully customizable app that adapts and grows WITH your child. Thanks to  AbbSistance™, there's NO MORE "bad guy" MOMENTS.. You don't set the limitations, __they__ do. 
+K.I.D.S.-Intellectual Development Software. K.I.D.S. - for CREATIVE kids. A fully customizable app that adapts and grows WITH your child/youth/AWAF**. Thanks to  AbbSistance™, there's NO MORE "bad guy" MOMENTS.. You don't set the limitations, __they__ do. 
 Every question they answer, or can't, begins setting up safe guards and customizing how the app will be displayed. 
 Safety Feature # 1; NO Direct ACCESS to the internet! EVER! Tourguide, Pal, and Safety officer, Abb (or Abb"y") never changes your phones safety settings, Abb doesn't have to. Abb just makes sure the options that may compromise you are never there to begin with. 
 
