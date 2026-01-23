@@ -99,3 +99,31 @@
     </script>
 </body>
 </html>
+// The Morph Trigger Logic
+function initiateMorph(targetState) {
+    const desk = document.getElementById('work-desk');
+    
+    // 1. Start the Fade/Transition
+    desk.style.opacity = '0';
+    desk.style.transform = 'scale(0.95)';
+
+    setTimeout(() => {
+        // 2. Swap the Content based on the Asset needed
+        if (targetState === 'REMEDIAL_COLORING') {
+            desk.innerHTML = `
+                <div class="canvas-container">
+                    <h2>Remedial Coloring Desk</h2>
+                    <canvas id="kidsCanvas" width="500" height="500"></canvas>
+                </div>`;
+            // Initialize Tool Logic here
+        }
+
+        // 3. Morph back in
+        desk.style.opacity = '1';
+        desk.style.transform = 'scale(1)';
+    }, 500); // The timing of the "Breath"
+}
+#work-desk {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    /* This creates the "Fluid" feel of the 3coverse */
+}
