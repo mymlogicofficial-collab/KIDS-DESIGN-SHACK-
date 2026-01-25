@@ -29,7 +29,29 @@
         <div id="door-wrapper">
             <div id="interior">
                 <div id="lila-lantern"></div>
-                <img id="abb-sprite" src="https://0fficial-collab.github.io/abb.png" alt="Abb">
+                <img id="abb-sprite" <div id="abb-container" class="abb-sprite">
+    <img id="abb-image" src="abb.png" alt="Abb" style="width:100%;" onerror="this.src='https://via.placeholder.com/150/00ff00/000000?text=ABB+READY'">
+    <div id="abb-glow"></div>
+</div>
+
+<style>
+    #abb-container {
+        position: absolute;
+        width: 130px;
+        bottom: -250px; /* Hidden */
+        transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 20;
+    }
+    #abb-glow {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle, rgba(0,255,0,0.3) 0%, transparent 70%);
+        filter: blur(15px);
+        z-index: -1;
+    }
+    .abb-in { bottom: 35% !important; }
+</style>
+            alt="Abb">
                 <div id="hub">
                     <h2 style="letter-spacing: 4px; margin-bottom: 10px;">CREATION STATION</h2>
                     <a href="#" class="download-btn">CONNECT iOS</a>
