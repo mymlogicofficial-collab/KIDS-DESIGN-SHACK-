@@ -75,3 +75,27 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SE CUSTOMS - Creation Station</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="abb-display">
+        <img src="abb.jpg" alt="Abb - SE Customs" id="abb-sprite">
+    </div>
+
+    <div id="workstation-controls">
+        <button onclick="MasterController.onCanvasTap(2)">Manual Magnet Toggle</button>
+        <div id="task-selector">
+            <button onclick="MasterController.onTaskSelect('V1_BASIC')">Coloring v1</button>
+            <button onclick="MasterController.onTaskSelect('V2_INTERMEDIATE')">Coloring v2</button>
+            <button onclick="MasterController.onTaskSelect('V3_PRO')">Coloring v3</button>
+        </div>
+    </div>
+
+    <script type="module" src="src/main_integration.js"></script>
+</body>
+</html>
