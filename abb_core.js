@@ -15,4 +15,20 @@ const abbRefinement = {
         light_glow: "neon_cyan"
     }
 };
+// SE CUSTOMS - ABB PREMIUM VISUAL DEFINITION
+const AbbAppearance = {
+    body: {
+        industrialSoftness: 0.05, // 5% edge rounding for premium finish
+        texture: "satin_metallic_teal",
+        windows: "high_intensity_cyan_glow"
+    },
+    vortexBase: {
+        material: "pearlescent_glass",
+        color: "clear_glassy_blue",
+        transparency: 0.7,
+        motion: "kinetic_dubstep_flow"
+    }
+};
+
+export default AbbAppearance;
 
