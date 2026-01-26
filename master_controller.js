@@ -81,3 +81,15 @@ const MasterController = {
 
 // Initialize the listener
 document.getElementById('drawingCanvas').addEventListener('click', MasterController.handleCanvasTouch);
+import SensorCalibration from '../hardware/logic/sensor_calibration.js';
+
+// Inside your handleCanvasTap function:
+handleCanvasTap: (signalStrength) => {
+    const result = SensorCalibration.validateTap(signalStrength);
+    
+    if (result === "VALID_DOUBLE_TAP") {
+        MagneticController.processTap(2);
+        // Visual feedback on screen
+        console.log("Canvas Locked: Magnet Engaged");
+    }
+}
