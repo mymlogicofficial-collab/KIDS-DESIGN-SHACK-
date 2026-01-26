@@ -93,3 +93,10 @@ handleCanvasTap: (signalStrength) => {
         console.log("Canvas Locked: Magnet Engaged");
     }
 }
+// Inside MasterController.init:
+import BootSequence from './logic/boot_sequence.js';
+
+init: () => {
+    // ... previous init code ...
+    BootSequence.run();
+}
