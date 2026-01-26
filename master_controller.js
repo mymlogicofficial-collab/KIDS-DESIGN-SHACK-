@@ -164,3 +164,6 @@ const MasterController = {
 // Bind to window for global access (Buttons, HTML, Terminal)
 window.MasterController = MasterController;
 MasterController.init();
+case 'OVAL_COMPASS':
+    const config = OvalingCompass.updateFromTool(points.a, points.slider, points.b);
+    return OvalingCompass.calculateEllipse(config.center, config.radiusX, config.radiusY, config.rotation);
