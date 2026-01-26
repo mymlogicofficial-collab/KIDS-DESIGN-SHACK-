@@ -1,28 +1,3 @@
-// ADD TO THE TOP with other imports
-import { ColorAssist } from './logic/color_assist.js';
-
-// ADD THIS inside the MasterController object
-const MasterController = {
-    // ... previous code ...
-
-    // The Bridge: Screen Touch -> Color Assist logic
-    handleCanvasTouch: (event) => {
-        const canvas = document.getElementById('drawingCanvas');
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        // Trigger the "wow" assist
-        const color = "#00ffff"; // Default SE Customs Teal
-        ColorAssist.applyFloodFill(canvas, x, y, color);
-        
-        // Let Abb react to the "wow" moment
-        ColorAssist.triggerWowEffect();
-    }
-};
-
-// Initialize the listener
-document.getElementById('drawingCanvas').addEventListener('click', MasterController.handleCanvasTouch);
 // SE CUSTOMS - LINE DETECTION & COLOR ASSIST
 const ColorAssist = {
     // Logic: Fills a bounded area if the user taps inside lines
@@ -55,4 +30,18 @@ export const ColorAssist = {
         abb.speak("Clean lines! Nice work.");
     }
 };
+export const ColorAssist = {
+    applyFloodFill: (canvas, x, y, color) => {
+        console.log(`Assisting at: ${x}, ${y} with ${color}`);
+        // This is where the magic line-detection happens
+    },
 
+    triggerWowEffect: () => {
+        // Creates the visual flair for the user
+        const abbSprite = document.getElementById('abb-sprite');
+        abbSprite.style.filter = "brightness(1.5) drop-shadow(0 0 30px #00ffff)";
+        setTimeout(() => {
+            abbSprite.style.filter = "brightness(1.0) drop-shadow(0 0 10px #00ffff)";
+        }, 500);
+    }
+};
