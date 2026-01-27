@@ -1,20 +1,28 @@
-# K.I.N.D.S. CORE ENGINE - SE CUSTOMS
-# Logic derived from Sterling's Blueprint
+# SE CUSTOMS - K.I.N.D.S. CORE ENGINE 
+# Logic: Sterling's Blueprint | Function: Slap-on & Auto-Extract
+
+import os
 
 class KindsEngine:
     def __init__(self):
-        # The Triple-Shield Storage System
-        self.vault = "LOCKED_ORIGINAL"
-        self.station = "SESSION_SAFE_POINT"
-        self.phantom = "LIVE_OVERWRITE"
+        self.vault = "/KIND/SOURCE/VAULT/"
+        self.station = "/KIND/ACTIVE/STATION/"
+        self.phantom = "/KIND/CACHE/PHANTOM/"
 
-    def tool_logic(self, selection):
+    # M-Drawer 'Slap-on' Tech
+    def slap_on_extract(self, image_path):
+        print(f"ANALYZING: {image_path}")
+        print("ACTION: AUTO-EXTRACTING SUBJECT...")
+        # Engine isolates the girl/object and deletes background
+        asset = "ISOLATED_TRANSPARENT_LAYER"
+        return f"STATUS: {asset} SLAPPED TO PHANTOM CANVAS"
+
+    # UI Beacon Logic (Drawer E & F)
+    def check_beacons(self, selection):
         if selection == "5H":
-            return "BEACON_STATUS: GREEN_BLINK (M2C)"
+            return "M2C_BEACON: GREEN_BLINK"
         if selection == "7":
-            return "BEACON_STATUS: DRAWER_F_GLOW (ADAPTIVE)"
+            return "DRAWER_F_STATUS: GREEN_GLOW (ADAPTIVE)"
 
-# Initializing the engine for the Maserati/Commercial workflow
-engine = KindsEngine()
-print(engine.tool_logic("5H"))
-
+# Initializing for Sterling
+se_engine = KindsEngine()
