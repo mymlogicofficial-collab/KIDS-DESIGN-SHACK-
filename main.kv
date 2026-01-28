@@ -1,0 +1,14 @@
+# K.I.N.D.S. Visual Layout
+BoxLayout:
+    orientation: 'vertical'
+    
+    Button:
+        text: '5H PENCIL'
+        on_press: app.trigger_m2c() # Activates Green Blink
+        background_color: (0, 1, 0, 1) if app.m2c_active else (1, 1, 1, 1)
+
+    Button:
+        text: '#7 ADAPTIVE'
+        on_press: app.open_drawer_f() # Activates Green Glow
+        background_color: (0, 0.8, 0, 1) if app.drawer_f_open else (1, 1, 1, 1)
+        
