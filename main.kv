@@ -58,3 +58,48 @@
         Button:
             text: root.active_soft  # This shows the 2B, 4B, 8B
             on_press: root.cycle_b_lead()
+        # DRAWER F: SLIDERS & TIPS
+        BoxLayout:
+            size_hint_y: 1 if root.drawer_f_open else 0.001
+            opacity: 1 if root.drawer_f_open else 0
+            orientation: 'vertical'
+            padding: 10
+            
+            # Tip Shape Selector
+            Button:
+                text: "Tip Shape: " + root.active_tip
+                on_press: root.cycle_tip_shape()
+                size_hint_y: 0.4
+
+            # Size Slider
+            BoxLayout:
+                Label:
+                    text: "Size"
+                    size_hint_x: 0.3
+                Slider:
+                    min: 1
+                    max: 100
+                    value: root.tip_size
+                    on_value: root.tip_size = self.value
+            
+            # Opacity Slider
+            BoxLayout:
+                Label:
+                    text: "Opacity"
+                    size_hint_x: 0.3
+                Slider:
+                    min: 0
+                    max: 100
+                    value: root.tip_opacity
+                    on_value: root.tip_opacity = self.value
+
+            # Gression Slider
+            BoxLayout:
+                Label:
+                    text: "Gression"
+                    size_hint_x: 0.3
+                Slider:
+                    min: 0
+                    max: 100
+                    value: root.tip_gression
+                    on_value: root.tip_gression = self.value
