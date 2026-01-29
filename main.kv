@@ -1,105 +1,63 @@
-<KindsRoot>:
-    orientation: 'vertical'
-
-    # AREA A: THE CANVAS (Top 70%) - Nothing blocks this
-    RelativeLayout:
-        size_hint_y: 0.7
-        canvas.before:
-            Color:
-                rgba: 1, 1, 1, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-        Label:
-            text: "CANVAS AREA"
-            color: 0.5, 0.5, 0.5, 1
-
-    # THE WORKBENCH (Middle Strip)
-    BoxLayout:
-        size_hint_y: 0.1
-        canvas.before:
-            Color:
-                rgba: 0.3, 0.3, 0.3, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-        Button:
-            text: "Eraser"
-        Button:
-            text: root.active_lead
-            on_press: root.cycle_h_lead()
-
     # THE DRAWERS (Bottom 20%)
     BoxLayout:
-        size_hint_y: 0.2
-        spacing: 2
-        Button:
-            text: "E"
-        Button:
-            text: "F"
-        Button:
-            text: "G"
-        Button:
-            text: "H"
-    # THE WORKBENCH (Middle Strip)
-    BoxLayout:
-        size_hint_y: 0.1
-        canvas.before:
-            Color:
-                rgba: 0.3, 0.3, 0.3, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-        Button:
-            text: "Eraser"
-        Button:
-            text: root.active_lead
-            on_press: root.cycle_h_lead()
-        Button:
-            text: root.active_soft  # This shows the 2B, 4B, 8B
-            on_press: root.cycle_b_lead()
-        # DRAWER F: SLIDERS & TIPS
+        orientation: 'vertical'
+        size_hint_y: 1 if (root.drawer_f_open or root.drawer_g_open) else 0.2
+        
+        # DRAWER F: SLIDERS & TIPS (Omitted for brevity, keep your existing F code here)
+
+        # DRAWER G: COLOR PRECISION LAB
         BoxLayout:
-            size_hint_y: 1 if root.drawer_f_open else 0.001
-            opacity: 1 if root.drawer_f_open else 0
-            orientation: 'vertical'
+            size_hint_y: 1 if root.drawer_g_open else 0.001
+            opacity: 1 if root.drawer_g_open else 0
+            orientation: 'horizontal'
             padding: 10
             
-            # Tip Shape Selector
-            Button:
-                text: "Tip Shape: " + root.active_tip
-                on_press: root.cycle_tip_shape()
-                size_hint_y: 0.4
-
-            # Size Slider
-            BoxLayout:
-                Label:
-                    text: "Size"
-                    size_hint_x: 0.3
-                Slider:
-                    min: 1
-                    max: 100
-                    value: root.tip_size
-                    on_value: root.tip_size = self.value
+            # Slider 1: Lighter/Tint
+            Slider:
+                orientation: 'vertical'
+                min: 0
+                max: 100
+                value: root.light_blend
+                on_value: root.light_blend = self.value
             
-            # Opacity Slider
+            # Central Hue Selector (Placeholder for ColorWheel)
             BoxLayout:
+                orientation: 'vertical'
                 Label:
-                    text: "Opacity"
-                    size_hint_x: 0.3
+                    text: "Hue"
                 Slider:
                     min: 0
-                    max: 100
-                    value: root.tip_opacity
-                    on_value: root.tip_opacity = self.value
+                    max: 360
+                    value: root.main_hue
+                    on_value: root.main_hue = self.value
+                # Visual Indicator of final color
+                Widget:
+                    canvas:
+                        Color:
+                            rgba: root.current_color
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
 
-            # Gression Slider
-            BoxLayout:
-                Label:
-                    text: "Gression"
-                    size_hint_x: 0.3
-                Slider:
-                    min: 0
-                    max: 100
-                    value: root.tip_gression
-                    on_value: root.tip_gression = self.value
+            # Slider 2: Darker/Shade
+            Slider:
+                orientation: 'vertical'
+                min: 0
+                max: 100
+                value: root.dark_blend
+                on_value: root.dark_blend = self.value
+
+        # DRAWER HANDLES
+        BoxLayout:
+            size_hint_y: 0.2
+            spacing: 2
+            Button:
+                text: "E"
+            Button:
+                text: "F"
+                on_press: root.toggle_drawer_f()
+            Button:
+                text: "G"
+                on_press: root.toggle_drawer_g()
+            Button:
+                text: "H"
