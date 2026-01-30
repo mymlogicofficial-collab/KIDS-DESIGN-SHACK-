@@ -1,119 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SE CUSTOMS</title>
+    <title>K.I.N.D.S. Workbench</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; position: fixed; font-family: 'Courier New', monospace; }
-        #main-stage { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #2c1e14 0%, #000 100%); perspective: 2000px; }
-        #door-wrapper { width: 85vw; height: 75vh; max-width: 400px; position: relative; transform-style: preserve-3d; }
+        body { background: #121212; color: white; margin: 0; font-family: sans-serif; overflow: hidden; }
+        /* [A] THE MAGNETS (Top Anchor) */
+        #Area_A { width: 100%; height: 60px; background: #1a1a1a; display: flex; justify-content: center; align-items: center; border-bottom: 2px solid #39ff14; position: fixed; top: 0; z-index: 100; }
         
-        /* THE DOOR */
-        #shack-door { position: absolute; width: 100%; height: 100%; background: #5d4037; border: 6px solid #3e2723; transform-origin: left; transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: inset 0 0 60px rgba(0,0,0,0.8); cursor: pointer; }
-        #handle { width: 55px; height: 55px; background: #ffd700; border-radius: 50%; position: absolute; right: 25px; top: 50%; box-shadow: 0 0 25px #ffd700; animation: pulse 2s infinite; }
-        
-        /* THE INTERIOR */
-        #interior { position: absolute; width: 100%; height: 100%; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding: 40px 20px; opacity: 0; transition: opacity 1s; color: #00ff00; text-align: center; }
-        #abb-sprite { width: 140px; position: absolute; bottom: -250px; transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
-        /* CONNECTABILITY */
-        #hub { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; z-index: 10; }
-        .download-btn { padding: 12px 25px; border: 2px solid #00ff00; color: #00ff00; text-decoration: none; font-weight: bold; border-radius: 8px; text-transform: uppercase; letter-spacing: 2px; }
-        
-        /* SE CUSTOMS INTEGRITY */
-        #footer { color: #555; font-size: 0.7rem; letter-spacing: 1px; }
+        /* THE CANVAS (The 360 Spin Zone) */
+        #Canvas_Container { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        #Main_Canvas { width: 80%; height: 70%; background: #fff; box-shadow: 0 0 20px #000; transition: transform 0.1s linear; }
 
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 40px #ffd700; } }
-        .door-open { transform: rotateY(-125deg); }
-        .visible { opacity: 1 !important; }
-        .abb-in { bottom: 35% !important; }
+        /* THE LOWER WORKBENCH (B-Z) */
+        #Workbench_Bottom { position: fixed; bottom: 0; width: 100%; background: #1a1a1a; border-top: 2px solid #333; }
+        .drawer { padding: 10px; border-bottom: 1px solid #222; display: flex; gap: 10px; overflow-x: auto; }
     </style>
 </head>
-<body onclick="primeAudio()">
-    <div id="main-stage">
-        <div id="door-wrapper">
-            <div id="interior">
-                <img id="abb-sprite" src="abb.jpg" alt="Abb">
-                
-                <div id="hub">
-                    <h2 style="letter-spacing: 4px; margin-bottom: 10px; color: #00ff00;">SE CUSTOMS</h2>
-                    <a href="#" class="download-btn">DOWNLOAD iOS</a>
-                    <a href="#" class="download-btn">DOWNLOAD ANDROID</a>
-                </div>
+<body>
 
-                <div id="footer">
-                    <p>SE CUSTOMS</p>
-                    <p>PROMOTIONAL ADVERTISING & DESIGN</p>
-                </div>
-            </div>
-
-            <div id="shack-door" onclick="knockAndEnter()">
-                <div id="handle"></div>
-                <h1 style="color: #2c1e14; font-size: 3rem; letter-spacing: 8px;">K.I.D.S.</h1>
-                <p style="color: #3e2723; font-weight: bold; letter-spacing: 4px;">SHACK</p>
-            </div>
-        </div>
+    <div id="Area_A">
+        <button onclick="snap0()">🧲 SNAP 0°</button>
+        <button id="lockBtn" onclick="toggleLock()">🔒 MAG LOCK: OFF</button>
+        <input type="range" min="0" max="360" value="0" oninput="rotateCanvas(this.value)" style="margin-left:20px;">
     </div>
 
-    <audio id="thud" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
-    <audio id="creak" src="https://assets.mixkit.co/active_storage/sfx/1090/1090-preview.mp3"></audio>
+    <div id="Canvas_Container">
+        <div id="Main_Canvas">
+            </div>
+    </div>
+
+    <div id="Workbench_Bottom">
+        <div class="drawer"><strong>[B-D] Rulers:</strong> <button>Straight</button> <button>Compass</button></div>
+        <div class="drawer"><strong>[E] Lid:</strong> <button>Task Switch</button> <button>Canvas Grit</button></div>
+        <div class="drawer"><strong>[F] Tools:</strong> <button>Lead H</button> <button>Lead B</button> <button>Shader</button></div>
+        <div class="drawer"><strong>[G] Gression:</strong> Size: <input type="range"> Opacity: <input type="range"></div>
+        <div class="drawer"><strong>[H] Color:</strong> <button>Wheel</button> <button>Mixer</button></div>
+        <div class="drawer"><strong>[I] Stamps:</strong> <button>Honeycomb</button> <button>Star</button></div>
+        <div class="drawer"><strong>[J-K] Tokens:</strong> <button>🥃 Whiskey</button> <button>🧸 Bear</button></div>
+    </div>
 
     <script>
-        let primed = false;
-        function primeAudio() { if (!primed) { document.getElementById('thud').load(); document.getElementById('creak').load(); primed = true; } }
-        function knockAndEnter() {
-            document.getElementById('thud').play();
-            setTimeout(() => {
-                document.getElementById('creak').play();
-                document.getElementById('shack-door').classList.add('door-open');
-                document.getElementById('interior').classList.add('visible');
-            }, 450);
-            setTimeout(() => { document.getElementById('abb-sprite').classList.add('abb-in'); }, 1300);
+        let rotation = 0;
+        let locked = false;
+        const canvas = document.getElementById('Main_Canvas');
+
+        function rotateCanvas(val) {
+            if (!locked) {
+                rotation = val;
+                canvas.style.transform = `rotate(${rotation}deg)`;
+            }
+        }
+
+        function snap0() {
+            rotation = 0;
+            canvas.style.transform = 'rotate(0deg)';
+            locked = true; // Magnets force the lock
+            document.getElementById('lockBtn').innerText = "🔒 MAG LOCK: ON";
+        }
+
+        function toggleLock() {
+            locked = !locked;
+            document.getElementById('lockBtn').innerText = locked ? "🔒 MAG LOCK: ON" : "🔒 MAG LOCK: OFF";
         }
     </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SE CUSTOMS - Creation Station</title>
-    <link rel="stylesheet" href="assets/styles/ui_refinement.css">
-
-<div id="task-menu">
-    <button class="task-btn" onclick="MasterController.onTaskSelect('V1_BASIC')">COLORING BOOK V1</button>
-    <button class="task-btn" onclick="MasterController.onTaskSelect('V2_INTERMEDIATE')">COLORING BOOK V2</button>
-    <button class="task-btn" onclick="MasterController.onTaskSelect('V3_PRO')">COLORING BOOK V3</button>
-</div>
-</head>
-<body>
-    <div id="abb-display">
-        <img src="abb.jpg" alt="Abb - SE Customs" id="abb-sprite">
-    </div>
-
-    <div id="workstation-controls">
-        <button onclick="MasterController.onCanvasTap(2)">Manual Magnet Toggle</button>
-        <div id="task-selector">
-            <button onclick="MasterController.onTaskSelect('V1_BASIC')">Coloring v1</button>
-            <button onclick="MasterController.onTaskSelect('V2_INTERMEDIATE')">Coloring v2</button>
-            <button onclick="MasterController.onTaskSelect('V3_PRO')">Coloring v3</button>
-        </div>
-    </div>
-
-    <script type="module" src="src/main_integration.js"></script>
-</body>
-</html>
-<link rel="stylesheet" href="assets/styles/ui_refinement.css">
-
-<div id="task-menu">
-    <button class="task-btn" onclick="MasterController.onTaskSelect('V1_BASIC')">COLORING BOOK V1</button>
-    <button class="task-btn" onclick="MasterController.onTaskSelect('V2_INTERMEDIATE')">COLORING BOOK V2</button>
-    <button class="task-btn" onclick="MasterController.onTaskSelect('V3_PRO')">COLORING BOOK V3</button>
-</div>
-<div id="creation-area">
-    <canvas id="drawingCanvas" width="800" height="600" style="border: 1px solid #333;"></canvas>
-</div>
-
-<script type="module" src="src/master_controller.js"></script>
