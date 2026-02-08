@@ -183,6 +183,26 @@ window.onload = () => {
 
     document.addEventListener('pointerdown', resetAbbTimer);
     resetAbbTimer();
+    // RECALL PROTOCOL
+function toggleTools() {
+    const toolbox = document.getElementById('kinds-toolbox');
+    toolbox.classList.toggle('toolbox-hidden');
+    
+    // Abb watches the move
+    const isHidden = toolbox.classList.contains('toolbox-hidden');
+    document.getElementById('abb-rail').innerText = isHidden ? "Abb: 'Focus Mode Active'" : "Abb: 'Tools Ready'";
+    
+    resetAbbTimer();
+}
+
+// Auto-hide when drawing starts to clear the path
+cvs.addEventListener('pointerdown', () => {
+    const toolbox = document.getElementById('kinds-toolbox');
+    if (!toolbox.classList.contains('toolbox-hidden')) {
+        toolbox.classList.add('toolbox-hidden');
+    }
+});
+    
 </script>
 
 </body>
