@@ -88,6 +88,27 @@
         <div onclick="alert('Opening Art Studio...')" style="font-size: 24px; cursor: pointer;">🎨</div>
         <div onclick="alert('AbbCademics: Loading...')" style="font-size: 24px; opacity: 0.5;">📚</div>
         </div>
+    <div id="Creation-Station" style="position: fixed; bottom: 0; width: 100%; max-width: 450px; background: #1a1a1a; border-top: 3px solid #00ffff; transition: transform 0.4s ease;">
+    
+    <div onclick="toggleWorkbench()" style="position: absolute; top: -25px; right: 10px; background: #1a1a1a; border: 1px solid #00ffff; border-bottom: none; border-radius: 5px 5px 0 0; padding: 2px 10px; font-size: 12px; opacity: 0.6; cursor: pointer;">🛠️ RECALL</div>
+
+    <div id="Drawer-E" style="padding: 10px; border-bottom: 1px solid #333; text-align: center;">
+        <div style="font-size: 10px; color: #00ffff; margin-bottom: 5px;">MASTER TASK</div>
+        <div style="display: flex; justify-content: space-around;">
+            <button onclick="morphTo('art')" style="font-size: 10px; padding: 5px;">🎨 ART</button>
+            <button onclick="morphTo('video')" style="font-size: 10px; padding: 5px;">📼 VIDEO</button>
+            <button onclick="morphTo('design')" style="font-size: 10px; padding: 5px;">🏎️ DESIGN</button>
+        </div>
+    </div>
+
+    <div id="Tool-Drawers" style="display: grid; grid-template-columns: 2fr 1fr; gap: 5px; padding: 10px; height: 80px;">
+        <div id="Drawer-F" style="border: 1px solid #333; background: #000; display: flex; align-items: center; justify-content: space-around;">
+            </div>
+        <div id="Drawer-G" style="border: 1px solid #333; background: #000; display: flex; align-items: center; justify-content: center;">
+            </div>
+    </div>
+    </div>
+    
     
 
 <script>
