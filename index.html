@@ -1,4 +1,71 @@
-<!DOCTYPE html>
+<div id="media-desk" style="background: #2c3e50; padding: 20px; border-radius: 15px; border: 5px solid red; position: relative;">
+  
+  <div id="video-screen" style="width: 100%; height: 200px; background: black; border: 3px solid #fff; border-radius: 10px; overflow: hidden; position: relative;">
+    <div id="abb-hand" style="display:none; position:absolute; font-size: 40px; z-index: 100;">👉</div>
+    <p id="abb-text" style="color: white; position: absolute; bottom: 10px; width: 100%; text-align: center; font-family: sans-serif;">Abb: "What are we making?"</p>
+  </div>
+
+  <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+    <div style="text-align: center;">
+      <input type="range" id="speed-knob" min="0.5" max="3" step="0.1" value="1" style="accent-color: #ff69b4; width: 80px;">
+      <p style="color: #ff69b4; font-size: 10px;">SPEED</p>
+    </div>
+    
+    <button id="next-move" class="road-flare" style="padding: 10px; border-radius: 50%; border: none; background: #27ae60; color: white;">NEXT</button>
+  </div>
+
+  <div id="odds-layer" style="opacity: 1; display: none;"></div>
+</div>
+
+<style>
+/* Road Flare Animation [cite: 2026-02-07] */
+.green-flash {
+  animation: flash-green 1.5s infinite;
+  box-shadow: 0 0 20px #2ecc71 !important;
+  border: 4px solid #2ecc71 !important;
+}
+
+@keyframes flash-green {
+  0% { background-color: #27ae60; }
+  50% { background-color: #2ecc71; }
+  100% { background-color: #27ae60; }
+}
+</style>
+
+<script>
+let activityTimer;
+const roadFlareElement = document.getElementById('next-move');
+const abbHand = document.getElementById('abb-hand');
+
+// 1. Road Flare Timer [cite: 2026-02-07]
+function startRoadFlareTimer() {
+    clearTimeout(activityTimer);
+    roadFlareElement.classList.remove('green-flash');
+    abbHand.style.display = 'none';
+
+    activityTimer = setTimeout(() => {
+        // Abb chimes in with the Green Flash
+        roadFlareElement.classList.add('green-flash');
+        console.log("AbbAsist™: Pointing the way!");
+        
+        // The Hovering Hand [cite: 2026-02-07]
+        abbHand.style.display = 'block';
+        abbHand.style.top = (roadFlareElement.offsetTop - 40) + "px";
+        abbHand.style.left = roadFlareElement.offsetLeft + "px";
+    }, 10000); // 10 second timer
+}
+
+// 2. Playback Speed Logic (Pink Knob)
+document.getElementById('speed-knob').addEventListener('input', (e) => {
+    console.log("Speed set to: " + e.target.value + "x");
+    startRoadFlareTimer(); // Reset timer on use
+});
+
+// Start monitoring for Road Flare
+document.addEventListener('click', startRoadFlareTimer);
+startRoadFlareTimer();
+</script>
+roadFlareElement.offsetLeft<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
