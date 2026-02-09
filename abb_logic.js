@@ -37,7 +37,34 @@ const AbbAssist = {
 
         const feedback = environmentResponses[itemType] || "That looks good on your desk.";
         console.log(`Abb Memorized: ${itemType}`);
-        return feedback;
+        return feedback;// ABBASIST™ CURIO GUIDANCE
+const CurioGuidance = {
+    idleLimit: 5000, // 5 seconds of inactivity inside a drawer
+
+    monitorDrawerUsage: function() {
+        setTimeout(() => {
+            if (ui.drawerIsOpen && !user.hasMoved) {
+                this.assistExit();
+            }
+        }, this.idleLimit);
+    },
+
+    assistExit: function() {
+        // Abb vocalizes and points
+        abb.speak("You can tap the bench to go back to your drawing."); 
+        ui.showAbbFingerTap('bench_area'); // Physical example of where to tap
+        ui.triggerGreenPulse('bench_area'); // The green roadmap pulse
+        
+        // Final fallback: Abb closes it if they still don't move
+        setTimeout(() => {
+            if (ui.drawerIsOpen) {
+                ui.closeDrawer();
+                abb.speak("I'll take care of that for you."); 
+            }
+        }, 3000);
+    
+
+        
     }
 };
 
