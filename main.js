@@ -80,6 +80,30 @@ const SpeakerLogic = {
         // Abb chimes in with a vibe check
         const feedback = ["Catchy.", "I like the rhythm.", "Good choice."];
         abb.speak(feedback[Math.floor(Math.random() * feedback.length)]);
+        // 1. SPEAKER TAP (Drawer F/G Logic)
+function handleSpeakerTap() {
+    const patterns = [
+        { color: 'cyan', symbol: '♪' },
+        { color: 'magenta', symbol: '♫' },
+        { color: 'gold', symbol: '♯' }
+    ];
+    
+    // Set Random Surprise
+    const mood = patterns[Math.floor(Math.random() * patterns.length)];
+    
+    // Trigger Visuals & Abb's vibe check
+    ui.spawnMusicalBubbles(mood.symbol, mood.color);
+    AbbAssist.acknowledgePersonalTouch('speaker'); // Abb chimes in
+}
+
+// 2. THE GROWTH WATCHER (1 Hour Cycle)
+function startEnvironmentTimer() {
+    let stage = 0;
+    setInterval(() => {
+        stage = (stage + 1) % 4; // Cycles 0, 1, 2, 3 (Stem to Bloom)
+        updatePlanterVisuals(stage);
+    }, 900000); // 15 minutes in milliseconds
+        
         
         };
     }
