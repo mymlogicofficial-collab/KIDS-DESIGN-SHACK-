@@ -122,10 +122,35 @@ const CreativeKInDS = {
         AbbAssist.showGuidance('bench_area'); // Show the hovering hand
         // Trigger the green pulse at Abb's fingertip
         ui.pulse('green', 'bench_area'); 
+        // SYSTEM CHECK: PLANTER GROWTH CYCLE
+const GrowthTest = {
+    testCycle: function() {
+        console.log("--- Starting Planter Growth Test ---");
+        let stages = ['Small Stem', '4 Leaves', 'Full Bush', 'Random Bloom'];
+        
+        stages.forEach((stage, index) => {
+            setTimeout(() => {
+                console.log(`Milestone ${index + 1}: ${stage}`);
+                
+                if(stage === 'Random Bloom') {
+                    // Triggers your "Set Random" color logic
+                    const colors = ['Red', 'Blue', 'Purple'];
+                    const chosen = colors[Math.floor(Math.random() * colors.length)];
+                    console.log(`SUCCESS: Plant bloomed ${chosen}!`);
+                    AbbAssist.acknowledgePersonalTouch('plant'); // Abb chimes in
+                }
+            }, index * 2000); // Fast-forwards to 2-second intervals for the test
+        });
+    }
+};
+
+// Run the test
+GrowthTest.testCycle();
+        
         
         
         };
-    }
+    };
         
       SE_Customs_App.init();
 
