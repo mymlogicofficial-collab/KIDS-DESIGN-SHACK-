@@ -18,9 +18,24 @@ const creationStation = {
     },
 
     // 3. CURIOS CABINET (PERSONAL MEMORY)
+    // This is for the creator's space: Fish bowls, plants, personal items.
     onNewItemAdded: (itemType) => {
-        userProfile.achievements.push(itemType);
-        abb.memorize(itemType); 
+        userProfile.personalWorkspace.push(itemType); // Moved from 'achievements'
+        abb.memorize(itemType); // Abb acknowledges the new desk mate
+    },
+
+    // 2. TOOLBOX & CURIOS CABINET
+    storage: {
+        toolbox: "slides_out", 
+        curiosCabinet: "stationary_display", // This stays fixed as the home base
+        
+        loadWorkspace: function(ageGroup) {
+            // "B1_Young" gets the easy layout, Pro gets the full bench.
+            const drawerAccess = ageGroup === "B1_Young" ? 2 : 6;
+            return `Setting up ${drawerAccess} drawers around your Cabinet items.`;
+        }
+    }
+        
     }
 };
 
