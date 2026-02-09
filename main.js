@@ -59,6 +59,28 @@ const PlanterLogic = {
             barrier: "gold_rope",
             label: "COMING SOON",
             status: "locked"
+            // CABINET ITEM: BLUETOOTH SPEAKER
+const SpeakerLogic = {
+    patterns: [
+        { color: 'cyan', speed: 'slow', symbol: '♪' },
+        { color: 'magenta', speed: 'float', symbol: '♫' },
+        { color: 'gold', speed: 'fast', symbol: '♯' }
+    ],
+
+    onTap: function() {
+        // Pick a random visual melody
+        const mood = this.patterns[Math.floor(Math.random() * this.patterns.length)];
+        
+        ui.spawnMusicalBubbles({
+            icon: mood.symbol,
+            tint: mood.color,
+            movement: mood.speed
+        });
+
+        // Abb chimes in with a vibe check
+        const feedback = ["Catchy.", "I like the rhythm.", "Good choice."];
+        abb.speak(feedback[Math.floor(Math.random() * feedback.length)]);
+        
         };
     }
         
