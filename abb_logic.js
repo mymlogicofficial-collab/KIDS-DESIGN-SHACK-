@@ -1,32 +1,43 @@
 // SE CUSTOMS - ABBASIST™ CORE LOGIC
-const AbbAssist = {
-    timer: null,
-    isIdle: true,
+// "Always there to AbbAssist™"
 
+const AbbAssist = {
     // 1. THE ROAD MAP (Green Flash)
-    // Triggers the first time through a sequence or on a timer.
-    triggerGreenFlash: (elementID) => {
-        console.log(`AbbAssist™: Flashing green on ${elementID}`);
-        ui.applyGlow(elementID, "green-flash");
+    // Triggers the first time through or after a 2.1s delay
+    flashTimer: 2100, 
+    
+    triggerNextMove: function(elementID) {
+        // Road maps the move with a glowing green pulse
+        console.log("AbbAssist™: Highlighting next step.");
+        return {
+            target: elementID,
+            effect: "green-flash",
+            timer: this.flashTimer
+        };
     },
 
-    // 2. THE ROAD FLARE / POINTING HAND
-    // If the creator doesn't ask, Abb chimes in.
-    provideGuidance: (targetTool) => {
-        const message = "Looking for this?";
-        abb.speak(message);
-        ui.showHoverHand(targetTool); // The hovering pointing hand
+    // 2. THE ROAD FLARE (Pointing Hand)
+    // Adjusts if the creator is looking for something specific
+    showGuidance: function(targetTool) {
+        return {
+            action: "hovering-pointing-hand",
+            location: targetTool,
+            status: "active"
+        };
     },
 
     // 3. PERSONAL MEMORY (Curios Cabinet Sync)
-    // Abb remembers the desk mates (fish bowls, plants, etc.)
-    acknowledgePersonalTouch: (item) => {
-        const reactions = {
-            'fish_bowl': "He looks happy in there.",
-            'plant': "Adds some life to the bench.",
-            'stuffed_animal': "A good friend to have while creating."
+    // Abb acknowledges personal touches on the stationary bench
+    memorizeEnvironment: function(itemType) {
+        const environmentResponses = {
+            'fish_bowl': "The fish bowl looks great on the shelf.",
+            'plant': "The plant adds a nice touch to the workspace.",
+            'stuffed_animal': "The stuffed animal is keeping the bench company."
         };
-        return reactions[item] || `Nice touch, Sterling.`;
+
+        const feedback = environmentResponses[itemType] || "That looks good on your desk.";
+        console.log(`Abb Memorized: ${itemType}`);
+        return feedback;
     }
 };
 
