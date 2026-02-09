@@ -28,8 +28,33 @@ const SE_Customs_App = {
         CreationStation.onNewItemAdded(item); // Adds to shelf
         const response = AbbAssist.memorizeEnvironment(item); // Abb speaks
         console.log(response);
+        // PLANTER GROWTH LOGIC (1 Hour Cycle)
+const PlanterLogic = {
+    currentStage: 0,
+    growthInterval: 15 * 60 * 1000, // 15 minutes in milliseconds
+
+    startGrowth: function() {
+        setInterval(() => {
+            this.currentStage++;
+            if (this.currentStage > 3) {
+                this.currentStage = 0; // Reset or hold at bloom
+            }
+            this.updateCabinetDisplay();
+        }, this.growthInterval);
+    },
+
+    updateCabinetDisplay: function() {
+        const stages = ['stem', 'four_leaves', 'bush', 'bloom'];
+        const currentVisual = stages[this.currentStage];
+        console.log(`Planter has grown to: ${currentVisual}`);
+        
+        // If it blooms, Abb Assist chimes in
+        if (currentVisual === 'bloom') {
+            AbbAssist.acknowledgePersonalTouch('plant'); 
+        }
     }
 };
-
-SE_Customs_App.init();
+        
+    
+    SE_Customs_App.init();
 
