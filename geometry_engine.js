@@ -29,7 +29,22 @@ const GeometryEngine = {
     applySRuler: (p1, p2, p3) => {
         // Logic for 2 hinges allowing complex curves
         return `Bezier curve mapped through hinges`;
-    }
+    }, 
+        // 4. GRESSION ENGINE (Shading Stick Measurement)
+    // Measures pigment displacement: (Area * Force) over Time
+    applyGression: function(area, force, duration) {
+        // Lifting factor: Cloth shaders reduce value/darkness
+        const lift = (force > 5) ? 0.4 : 0.15; 
+        
+        // Displacement factor: How far the medium spreads
+        const displacement = (area * force) / Math.max(duration, 0.5);
+
+        return {
+            opacityChange: -lift, // Subtractive value (lightening)
+            spreadRadius: displacement,
+            blendType: 'natural-physical'
+            };
+  }
 };
 
 export default GeometryEngine;
