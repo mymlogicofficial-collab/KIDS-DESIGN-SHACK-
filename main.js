@@ -149,8 +149,9 @@ GrowthTest.testCycle();
         
         
         
-        };
+        
     
         
       SE_Customs_App.init();
 
+ 
