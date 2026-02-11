@@ -1,155 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KInDS - Creation Station</title>
+    <title>Creative KInDS - Bench</title>
     <style>
-        body { background: #000; color: #39ff14; margin: 0; font-family: sans-serif; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-        #kinds-hub { width: 100vw; height: 100vh; max-width: 450px; display: flex; flex-direction: column; position: relative; border: 1px solid #222; }
+        body { background: #000; color: #39ff14; margin: 0; font-family: sans-serif; overflow: hidden; }
+        #kinds-hub { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
         
-        /* Stage Area */
-        #stage { flex-grow: 1; position: relative; background: #111; overflow: hidden; }
-        .layer { position: absolute; width: 100%; height: 100%; display: none; padding: 10px; box-sizing: border-box; }
-        .active-layer { display: block; }
+        /* THE BENCH (TOP) */
+        #bench-top { display: flex; justify-content: space-around; background: #222; padding: 10px; border-bottom: 3px solid #00ffff; height: 80px; }
+        .curio-shelf { width: 45%; height: 60px; border: 1px solid #444; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .red { background: #800000; } .blue { background: #000080; }
+        .soon { background: #fff; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; }
+        #plant-growth { position: absolute; bottom: 2px; font-size: 18px; }
 
-        /* Canvas & Media */
-        #Main_Canvas { background: transparent; border: 1px solid #333; display: block; margin: auto; touch-action: none; }
-        #video-screen { width: 90%; height: 180px; background: #000; margin: 20px auto; border: 2px solid #fff; position: relative; }
+        /* THE CANVAS (BELOW BENCH) */
+        #stage { flex-grow: 1; background: #111; display: flex; align-items: center; justify-content: center; position: relative; }
+        canvas { background: #000; border: 1px solid #333; touch-action: none; }
 
-        /* Perry-Plex Toolbox */
-        #toolbox {
-            position: fixed; bottom: 0; width: 100%; max-width: 450px;
-            background: #1a1a1a; border-top: 3px solid #00ffff;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000;
-        }
-        .toolbox-hidden { transform: translateY(calc(100% - 35px)); }
-
-        /* Recall Tab */
-        #recall-tab {
-            position: absolute; top: -30px; right: 10px; background: #1a1a1a;
-            border: 2px solid #00ffff; border-bottom: none; border-radius: 8px 8px 0 0;
-            padding: 5px 15px; color: #00ffff; font-size: 12px; cursor: pointer;
-        }
-
-        /* Drawers */
-        .drawer-row { display: flex; gap: 5px; padding: 5px 10px; }
-        .drawer { background: #000; border: 1px solid #333; display: flex; justify-content: space-around; align-items: center; min-height: 50px; }
-        button { background: #222; border: 1px solid #00ffff; color: #00ffff; padding: 8px; font-size: 10px; cursor: pointer; }
-        
-        .green-flash { animation: flash-green 1s infinite alternate; box-shadow: 0 0 15px #39ff14; }
-        @keyframes flash-green { from { border-color: #27ae60; } to { border-color: #39ff14; } }
+        /* TOOLBOX (BOTTOM) */
+        #toolbox { background: #1a1a1a; border-top: 2px solid #00ffff; padding: 10px; }
+        .drawer-row { display: flex; gap: 5px; margin-bottom: 5px; }
+        button { background: #222; border: 1px solid #00ffff; color: #00ffff; padding: 10px; flex: 1; font-size: 12px; }
     </style>
 </head>
 <body>
 
 <div id="kinds-hub">
-    <div style="padding: 10px; display: flex; justify-content: space-between; font-size: 10px; background: #111; border-bottom: 1px solid #222;">
-        <span>KInDS™ CREATION-STATION</span>
-        <span id="abb-rail">Abb: Watching...</span>
-                <span id="abb-rail">Abb: Watching...</span>
-    </div>
-
-    <div style="display: flex; justify-content: space-around; background: #222; padding: 5px; border-bottom: 2px solid #333;">
-        <div id="shelf-left" style="width: 45%; height: 60px; background: #800000; border: 1px solid #444; position: relative; display: flex; align-items: center; justify-content: center;">
-            <span style="background: white; color: black; font-size: 10px; padding: 2px 5px; font-weight: bold; border: 1px solid #000;">SOON</span>
-            <div id="planter-display" style="position: absolute; bottom: 5px; font-size: 20px;"></div>
+    <div id="bench-top">
+        <div class="curio-shelf red">
+            <span class="soon">SOON</span>
+            <div id="plant-growth"></div>
         </div>
-        <div id="shelf-right" style="width: 45%; height: 60px; background: #000080; border: 1px solid #444; position: relative; display: flex; align-items: center; justify-content: center;">
-            <span style="background: white; color: black; font-size: 10px; padding: 2px 5px; font-weight: bold; border: 1px solid #000;">SOON</span>
-             <div id="speaker-display" style="position: absolute; bottom: 5px; font-size: 20px;"></div>
+        <div class="curio-shelf blue">
+            <span class="soon">SOON</span>
+            <div id="speaker-notes"></div>
         </div>
     </div>
 
     <div id="stage">
-        
-    </div>
-
-    <div id="stage">
-        <div id="layer-art" class="layer active-layer"><canvas id="Main_Canvas"></canvas></div>
-        <div id="layer-video" class="layer">
-            <div id="video-screen"><p style="text-align:center; margin-top:80px; color:#444;">[VIDEO EDITOR]</p></div>
-        </div>
-        <div id="layer-design" class="layer"><h3 style="text-align:center;">Prime Time</h3><p style="text-align:center; font-size:50px;">🏎️</p></div>
+        <canvas id="Main_Canvas"></canvas>
     </div>
 
     <div id="toolbox">
-        <div id="recall-tab" onclick="toggleTools()">🛠️ RECALL</div>
-        
         <div class="drawer-row">
-            <div class="drawer" style="width: 100%; flex-direction: column; padding: 5px;">
-                <span style="font-size: 8px; color: #555;">DRAWER E: MASTER TASK</span>
-                <div style="display: flex; gap: 10px;">
-                    <button id="btn-art" onclick="morphTo('art')">🎨 ART</button>
-                    <button id="btn-video" onclick="morphTo('video')">📼 VIDEO</button>
-                    <button id="btn-design" onclick="morphTo('design')">🏎️ DESIGN</button>
-                </div>
-            </div>
+            <button onclick="clearCanvas()">🧼 CLEAR</button>
+            <button onclick="testGrowth()">🌱 TEST GROWTH</button>
         </div>
-
         <div class="drawer-row">
-            <div id="Drawer-F" class="drawer" style="flex: 2;"></div>
-            <div id="Drawer-G" class="drawer" style="flex: 1;"></div>
-        </div>
-
-        <div class="drawer-row">
-            <button onclick="alert('Vault')" style="flex:1">[L] VAULT</button>
-            <button onclick="alert('Logic')" style="flex:1">[M] LOGIC</button>
+            <button>[L] VAULT</button>
+            <button>[M] LOGIC</button>
         </div>
     </div>
 </div>
 
 <script>
-    const cvs = document.getElementById('Main_Canvas');
-    const ctx = cvs.getContext('2d');
-    cvs.width = window.innerWidth * 0.9;
-    cvs.height = window.innerHeight * 0.5;
+    const canvas = document.getElementById('Main_Canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth * 0.95;
+    canvas.height = window.innerHeight * 0.5;
+
+    // Drawing Logic
     let drawing = false;
+    ctx.strokeStyle = '#39ff14';
+    ctx.lineWidth = 5;
 
-    // --- RECALL PROTOCOL ---
-    function toggleTools() {
-        document.getElementById('toolbox').classList.toggle('toolbox-hidden');
-    }
-
-    // --- PERRY-PLEX MORPH ---
-    function morphTo(task) {
-        // Switch Stage
-        document.querySelectorAll('.layer').forEach(l => l.style.display = 'none');
-        document.getElementById('layer-' + task).style.display = 'block';
-
-        const f = document.getElementById('Drawer-F');
-        const g = document.getElementById('Drawer-G');
-
-        if (task === 'art') {
-            f.innerHTML = '<button onclick="setTool(15)">🖍️</button><button onclick="setTool(5)">🖊️</button>';
-            g.innerHTML = '<span onclick="ctx.clearRect(0,0,cvs.width,cvs.height)" style="font-size:20px; cursor:pointer;">🧼</span>';
-            document.getElementById('abb-rail').innerText = "Abb: 'Art Bench Ready'";
-        } else if (task === 'video') {
-            f.innerHTML = '<button>✂️ TRIM</button><button>🎞️ CLIP</button>';
-            g.innerHTML = '<button>🔄</button>';
-            document.getElementById('abb-rail').innerText = "Abb: 'Video Bench Ready'";
-        }
-    }
-
-    // --- DRAWING ENGINE ---
-    function setTool(size) { ctx.lineWidth = size; ctx.lineCap = 'round'; ctx.strokeStyle = '#39ff14'; }
-    cvs.addEventListener('pointerdown', () => { 
-        drawing = true; ctx.beginPath(); 
-        document.getElementById('toolbox').classList.add('toolbox-hidden'); // Auto-hide on work
-    });
-    cvs.addEventListener('pointermove', (e) => {
+    canvas.addEventListener('pointerdown', (e) => { drawing = true; ctx.beginPath(); });
+    canvas.addEventListener('pointermove', (e) => {
         if (!drawing) return;
-        ctx.lineTo(e.offsetX, e.offsetY);
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
         ctx.stroke();
     });
     window.addEventListener('pointerup', () => drawing = false);
 
-    // Initial State
-    morphTo('art');
-    setTool(10);
-</script>
-    <script src="main.js" type="module"></script>
-    
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
+    // FAST-FORWARD GROWTH TEST
+    function testGrowth() {
+        const stages = ['🌱', '🌿', '🌳', '🌸'];
+        stages.forEach((s, i) => {
+            setTimeout(() => {
+                document.getElementById('plant-growth').innerText = s;
+                if(i === 3) alert("Abb: It's in full bloom!");
+            }, i * 2000);
+        });
+    }
+</script>
 </body>
 </html>
