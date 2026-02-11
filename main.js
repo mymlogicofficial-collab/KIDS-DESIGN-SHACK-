@@ -47,6 +47,27 @@ const GrowthTest = {
         });
     }
 };
+const GrowthTest = {
+    run: function() {
+        const stages = ['🌱 Stem', '🌿 4-Leaves', '🌳 Bush', '🌸 BLOOM!'];
+        
+        stages.forEach((s, i) => {
+            setTimeout(() => {
+                // This finds the text in your green header and changes it
+                const statusText = document.querySelector('p[style*="color: rgb(153, 255, 153)"]'); 
+                if (statusText) {
+                    statusText.innerText = `Abb: Plant is ${s}`;
+                } else {
+                    // Fallback: If it can't find the header, it pops up an alert
+                    alert(`Growth Update: ${s}`);
+                }
+            }, i * 2000); // Changes every 2 seconds for the test
+        });
+    }
+};
+
+GrowthTest.run();
+
 
 // --- TURN THE KEY ---
 // These run the second you hit commit
