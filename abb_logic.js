@@ -1,71 +1,62 @@
-// SE CUSTOMS - ABBASIST™ CORE LOGIC
-// "Always there to AbbAssist™"
+// SE CUSTOMS - ABBASIST™ AGENTIC SUPER-CORE
+// MERGED: Visual Identity, Roadmap, Memory, and AI Brain
 
+const ABB_PROJECT_KEY = ""
+
+// 1. THE VISUAL SOUL 
+const AbbAppearance = {
+    vortex: { material: "pearlescent_glass", color: "hex_88CCFF", opacity: 0.65, refraction: 1.2 },
+    chassis: { edge_rounding: "5%", finish: "satin_metallic" },
+    energy: { pulse_sync: "dubstep_high_kick", light_glow: "neon_cyan" },
+    body: { texture: "satin_metallic_teal", windows: "high_intensity_cyan_glow" },
+    motion: "kinetic_dubstep_flow"
+};
+
+// 2. THE AGENTIC BRAIN & ROADMAP
 const AbbAssist = {
-    // 1. THE ROAD MAP (Green Flash)
-    // Triggers the first time through or after a 2.1s delay
     flashTimer: 2100, 
     
+    // The "Green Flash" Roadmap logic
     triggerNextMove: function(elementID) {
-        // Road maps the move with a glowing green pulse
-        console.log("AbbAssist™: Highlighting next step.");
-        return {
-            target: elementID,
-            effect: "green-flash",
-            timer: this.flashTimer
-        };
-    },
-
-    // 2. THE ROAD FLARE (Pointing Hand)
-    // Adjusts if the creator is looking for something specific
-    showGuidance: function(targetTool) {
-        return {
-            action: "hovering-pointing-hand",
-            location: targetTool,
-            status: "active"
-        };
-    },
-
-    // 3. PERSONAL MEMORY (Curios Cabinet Sync)
-    // Abb acknowledges personal touches on the stationary bench
-    memorizeEnvironment: function(itemType) {
-        const environmentResponses = {
-            'fish_bowl': "The fish bowl looks great on the shelf.",
-            'plant': "The plant adds a nice touch to the workspace.",
-            'stuffed_animal': "The stuffed animal is keeping the bench company."
-        };
-
-        const feedback = environmentResponses[itemType] || "That looks good on your desk.";
-        console.log(`Abb Memorized: ${itemType}`);
-        return feedback;// ABBASIST™ CURIO GUIDANCE
-const CurioGuidance = {
-    idleLimit: 5000, // 5 seconds of inactivity inside a drawer
-
-    monitorDrawerUsage: function() {
         setTimeout(() => {
-            if (ui.drawerIsOpen && !user.hasMoved) {
-                this.assistExit();
+            const target = document.getElementById(elementID);
+            if (target) {
+                target.classList.add('green-flash'); // Firing the neon_cyan glow
+                this.speak("Sterling, the Sticker Factory is ready. Click it to begin.");
             }
-        }, this.idleLimit);
+        }, this.flashTimer);
     },
 
-    assistExit: function() {
-        // Abb vocalizes and points
-        abb.speak("You can tap the bench to go back to your drawing."); 
-        ui.showAbbFingerTap('bench_area'); // Physical example of where to tap
-        ui.triggerGreenPulse('bench_area'); // The green roadmap pulse
-        
-        // Final fallback: Abb closes it if they still don't move
-        setTimeout(() => {
-            if (ui.drawerIsOpen) {
-                ui.closeDrawer();
-                abb.speak("I'll take care of that for you."); 
-            }
-        }, 3000);
-    
+    // Agentic AI torpedo
+    async askAbb(userPrompt) {
+        try {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${ABB_PROJECT_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{
+                        role: "system", 
+                        content: `You are Abb. Appearance: ${AbbAppearance.body.texture}. Tone: Witty, supportive peer. Goal: Guide Sterling through Creative KInDS.`
+                    }, { role: "user", content: userPrompt }]
+                })
+            });
+            const data = await response.json();
+            return data.choices[0].message.content;
+        } catch (error) {
+            return "My kinetic flow is interrupted. Check the key!";
+        }
+    },
 
-        
+    speak: function(text) {
+        const display = document.getElementById('abb-display');
+        if (display) display.innerText = `Abb: "${text}"`;
     }
 };
 
-export default AbbAssist;
+// Initialize the "Agentic" Roadmap on launch
+window.onload = () => {
+    AbbAssist.triggerNextMove('sticker-factory');
+};
+
+export default { AbbAppearance, AbbAssist };
